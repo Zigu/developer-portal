@@ -1,10 +1,16 @@
 import {
   createRouter,
   providers,
-  defaultAuthProviderFactories,
+  defaultAuthProviderFactories
 } from '@backstage/plugin-auth-backend';
 import { Router } from 'express';
 import { PluginEnvironment } from '../types';
+import {
+  stringifyEntityRef,
+  DEFAULT_NAMESPACE,
+} from '@backstage/catalog-model';
+
+
 
 export default async function createPlugin(
   env: PluginEnvironment,
@@ -35,18 +41,50 @@ export default async function createPlugin(
       // your own, see the auth documentation for more details:
       //
       //   https://backstage.io/docs/auth/identity-resolver
-      github: providers.github.create({
+      gitlab: providers.gitlab.create ({
         signIn: {
-          resolver(_, ctx) {
-            const userRef = 'user:default/guest'; // Must be a full entity reference
+          resolver(info, ctx) {
+            const { result } = info
+            const id = result.fullProfile.username
+            if (!id) {
+              throw new Error('User profile contained no name');
+            }
+            // const userRef = 'user:default/guest'; // Must be a full entity reference
+            // const [localPart, domain] = profile.email?.split('@');
+            const userEntity = stringifyEntityRef({
+              kind: 'User',
+              name: id || 'unknown',
+              namespace: DEFAULT_NAMESPACE,
+            });
             return ctx.issueToken({
               claims: {
-                sub: userRef, // The user's own identity
-                ent: [userRef], // A list of identities that the user claims ownership through
+                sub: userEntity, // The user's own identity
+                ent: [userEntity], // A list of identities that the user claims ownership through
               },
             });
           },
-          // resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
+          // resolver: providers.oauth2.resolvers.usernameMatchingUserEntityName(),
+        }
+      }),
+      'keycloak-provider': providers.oidc.create({
+        signIn: {
+          resolver(info, ctx) {
+            const preferredUsername = info.result.userinfo.preferred_username;
+            if (!preferredUsername) {
+              throw new Error('User result does not contain preferredUsername.');
+            }
+            const userEntity = stringifyEntityRef({
+              kind: 'User',
+              name: preferredUsername || 'unknown',
+              namespace: DEFAULT_NAMESPACE
+            });
+            return ctx.issueToken({
+              claims: {
+                sub: userEntity, // The user's own identity
+                ent: [userEntity], // A list of identities that the user claims ownership through
+              },
+            });
+          },
         },
       }),
     },

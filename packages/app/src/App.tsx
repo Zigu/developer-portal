@@ -34,8 +34,25 @@ import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
+import { keycloakAuthApiRef } from './apis';
+import { SignInPage } from '@backstage/core-components';
+
+
 const app = createApp({
   apis,
+  components: {
+      SignInPage: props => (
+        <SignInPage
+            {...props}
+            providers={['guest', {
+                id: 'keycloak-auth-provider',
+                title: 'KeyCloak',
+                message: 'Sign in using Keycloak',
+                apiRef: keycloakAuthApiRef,
+            }]}
+      />
+    )
+  },
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
