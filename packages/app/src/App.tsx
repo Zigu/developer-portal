@@ -39,6 +39,7 @@ import {SignInPage} from '@backstage/core-components';
 
 import {ToolboxPage} from '@drodil/backstage-plugin-toolbox';
 import {ExplorePage} from '@backstage/plugin-explore';
+import { CostInsightsPage } from '@backstage/plugin-cost-insights';
 
 const app = createApp({
     apis,
@@ -115,6 +116,7 @@ const routes = (
         <Route path="/catalog-graph" element={<CatalogGraphPage/>}/>
         <Route path="/toolbox" element={<ToolboxPage/>}/>
         <Route path="/explore" element={<ExplorePage/>}/>
+        <Route path="/cost-insights" element={<CostInsightsPage />} />
     </FlatRoutes>
 );
 

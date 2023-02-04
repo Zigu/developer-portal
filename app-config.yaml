@@ -68,6 +68,44 @@ auth:
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
+costInsights:
+  engineerCost: 200000
+  products:
+    computeEngine:
+      name: Compute Engine
+      icon: compute
+    cloudStorage:
+      name: Cloud Storage
+      icon: storage
+    bigQuery:
+      name: BigQuery
+      icon: search
+  metrics:
+    DAU:
+      name: Daily Active Users
+      default: true
+    MSC:
+      name: Monthly Subscribers
+  baseCurrency:
+    locale: de-DE
+    options:
+      currency: EUR
+      minimumFractionDigits: 3
+  currencies:
+    engineers:
+      label: 'Engineers'
+      unit: 'engineer'
+    euro:
+      kind: 'EUR'
+      label: 'Euro'
+      unit: 'euro'
+      rate: 1
+    carbonOffset:
+      kind: 'CARBON_OFFSET_TONS'
+      label: 'Carbon Offset Tons ♻️⚖️s'
+      unit: 'carbon offset ton'
+      rate: 3.5
+
 catalog:
   import:
     entityFilename: catalog-info.yaml

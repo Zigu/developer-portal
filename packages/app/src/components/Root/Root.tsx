@@ -7,6 +7,7 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import BuildIcon from '@material-ui/icons/Build';
 import CenterFocusIcon from '@material-ui/icons/CenterFocusWeakRounded';
+import MoneyIcon from '@material-ui/icons/MonetizationOn';
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
 import {
@@ -78,6 +79,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarScrollWrapper>
           <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox" />
           <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar" />
+          <SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights" />
         </SidebarScrollWrapper>
       </SidebarGroup>
       <SidebarSpace />

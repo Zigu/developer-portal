@@ -15,6 +15,10 @@ import {
   SessionApi,
 } from '@backstage/core-plugin-api';
 import {OAuth2} from "@backstage/core-app-api";
+import { costInsightsApiRef } from '@backstage/plugin-cost-insights';
+import { CostInsightsClient } from './clients/CostInsightsClient';
+import { catalogApiRef } from "@backstage/plugin-catalog-react";
+
 
 
 export const keycloakAuthApiRef: ApiRef<
@@ -51,6 +55,13 @@ export const apis: AnyApiFactory[] = [
           },
           environment: configApi.getOptionalString('auth.environment'),
         }),
+  }),
+  createApiFactory({
+    api: costInsightsApiRef,
+    deps: {
+      catalogApi: catalogApiRef
+    },
+    factory: ({ catalogApi }) => new CostInsightsClient({ catalogApi }),
   }),
   ScmAuth.createDefaultApiFactory(),
 ];
