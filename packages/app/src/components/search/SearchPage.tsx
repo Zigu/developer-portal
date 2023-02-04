@@ -1,14 +1,14 @@
 import React from 'react';
-import { makeStyles, Theme, Grid, List, Paper } from '@material-ui/core';
+import {makeStyles, Theme, Grid, List, Paper} from '@material-ui/core';
 
-import { CatalogSearchResultListItem } from '@backstage/plugin-catalog';
+import {CatalogSearchResultListItem} from '@backstage/plugin-catalog';
 import {
   catalogApiRef,
   CATALOG_FILTER_EXISTS,
 } from '@backstage/plugin-catalog-react';
-import { TechDocsSearchResultListItem } from '@backstage/plugin-techdocs';
+import {TechDocsSearchResultListItem} from '@backstage/plugin-techdocs';
 
-import { SearchType } from '@backstage/plugin-search';
+import {SearchType} from '@backstage/plugin-search';
 import {
   DefaultResultListItem,
   SearchBar,
@@ -24,7 +24,9 @@ import {
   Header,
   Page,
 } from '@backstage/core-components';
-import { useApi } from '@backstage/core-plugin-api';
+import {useApi} from '@backstage/core-plugin-api';
+import { ToolSearchResultListItem } from '@backstage/plugin-explore';
+import BuildIcon from '@material-ui/icons/Build';
 
 const useStyles = makeStyles((theme: Theme) => ({
   bar: {
@@ -43,17 +45,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const SearchPage = () => {
   const classes = useStyles();
-  const { types } = useSearch();
+  const {types} = useSearch();
   const catalogApi = useApi(catalogApiRef);
 
   return (
     <Page themeId="home">
-      <Header title="Search" />
+      <Header title="Search"/>
       <Content>
         <Grid container direction="row">
           <Grid item xs={12}>
             <Paper className={classes.bar}>
-              <SearchBar />
+              <SearchBar/>
             </Paper>
           </Grid>
           <Grid item xs={3}>
@@ -64,12 +66,17 @@ const SearchPage = () => {
                 {
                   value: 'software-catalog',
                   name: 'Software Catalog',
-                  icon: <CatalogIcon />,
+                  icon: <CatalogIcon/>,
                 },
                 {
                   value: 'techdocs',
                   name: 'Documentation',
-                  icon: <DocsIcon />,
+                  icon: <DocsIcon/>,
+                },
+                {
+                  value: 'tools',
+                  name: 'Tools',
+                  icon: <BuildIcon/>,
                 },
               ]}
             />
@@ -81,11 +88,11 @@ const SearchPage = () => {
                   name="name"
                   values={async () => {
                     // Return a list of entities which are documented.
-                    const { items } = await catalogApi.getEntities({
+                    const {items} = await catalogApi.getEntities({
                       fields: ['metadata.name'],
                       filter: {
                         'metadata.annotations.backstage.io/techdocs-ref':
-                          CATALOG_FILTER_EXISTS,
+                        CATALOG_FILTER_EXISTS,
                       },
                     });
 
@@ -110,11 +117,11 @@ const SearchPage = () => {
             </Paper>
           </Grid>
           <Grid item xs={9}>
-            <SearchPagination />
+            <SearchPagination/>
             <SearchResult>
-              {({ results }) => (
+              {({results}) => (
                 <List>
-                  {results.map(({ type, document, highlight, rank }) => {
+                  {results.map(({type, document, highlight, rank}) => {
                     switch (type) {
                       case 'software-catalog':
                         return (
@@ -128,6 +135,15 @@ const SearchPage = () => {
                       case 'techdocs':
                         return (
                           <TechDocsSearchResultListItem
+                            key={document.location}
+                            result={document}
+                            highlight={highlight}
+                            rank={rank}
+                          />
+                        );
+                      case 'tools':
+                        return (
+                          <ToolSearchResultListItem
                             key={document.location}
                             result={document}
                             highlight={highlight}
@@ -155,4 +171,4 @@ const SearchPage = () => {
   );
 };
 
-export const searchPage = <SearchPage />;
+export const searchPage = <SearchPage/>;

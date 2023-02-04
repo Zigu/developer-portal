@@ -1,13 +1,14 @@
-import { useHotCleanup } from '@backstage/backend-common';
-import { createRouter } from '@backstage/plugin-search-backend';
+import {useHotCleanup} from '@backstage/backend-common';
+import {createRouter} from '@backstage/plugin-search-backend';
 import {
   IndexBuilder,
   LunrSearchEngine,
 } from '@backstage/plugin-search-backend-node';
-import { PluginEnvironment } from '../types';
-import { DefaultCatalogCollatorFactory } from '@backstage/plugin-catalog-backend';
-import { DefaultTechDocsCollatorFactory } from '@backstage/plugin-techdocs-backend';
-import { Router } from 'express';
+import {PluginEnvironment} from '../types';
+import {DefaultCatalogCollatorFactory} from '@backstage/plugin-catalog-backend';
+import {DefaultTechDocsCollatorFactory} from '@backstage/plugin-techdocs-backend';
+import {Router} from 'express';
+import {ToolDocumentCollatorFactory} from '@backstage/plugin-explore-backend';
 
 export default async function createPlugin(
   env: PluginEnvironment,
@@ -22,11 +23,11 @@ export default async function createPlugin(
   });
 
   const schedule = env.scheduler.createScheduledTaskRunner({
-    frequency: { minutes: 10 },
-    timeout: { minutes: 15 },
+    frequency: {minutes: 10},
+    timeout: {minutes: 15},
     // A 3 second delay gives the backend server a chance to initialize before
     // any collators are executed, which may attempt requests against the API.
-    initialDelay: { seconds: 3 },
+    initialDelay: {seconds: 3},
   });
 
   // Collators are responsible for gathering documents known to plugins. This
@@ -49,9 +50,17 @@ export default async function createPlugin(
     }),
   });
 
+  indexBuilder.addCollator({
+    schedule,
+    factory: ToolDocumentCollatorFactory.fromConfig(env.config, {
+      discovery: env.discovery,
+      logger: env.logger,
+    }),
+  });
+
   // The scheduler controls when documents are gathered from collators and sent
   // to the search engine for indexing.
-  const { scheduler } = await indexBuilder.build();
+  const {scheduler} = await indexBuilder.build();
   scheduler.start();
 
   useHotCleanup(module, () => scheduler.stop());
