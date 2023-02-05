@@ -98,7 +98,7 @@ costInsights:
     euro:
       kind: 'EUR'
       label: 'Euro'
-      unit: 'euro'
+      unit: 'Euro'
       rate: 1
     carbonOffset:
       kind: 'CARBON_OFFSET_TONS'

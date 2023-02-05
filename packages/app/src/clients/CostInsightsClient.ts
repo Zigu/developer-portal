@@ -241,6 +241,8 @@ export function exclusiveEndDateOf(
 }
 
 // Partially copied from https://github.com/backstage/backstage/blob/master/plugins/cost-insights/src/example/client.ts
+// Replace with https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-pricing/index.html or
+// https://cloud.google.com/billing/docs/reference/rest and https://github.com/googleapis/google-api-nodejs-client
 export class CostInsightsClient implements CostInsightsApi {
 
   private request(_: any, res: any): Promise<any> {
