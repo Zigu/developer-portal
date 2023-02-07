@@ -29,6 +29,9 @@ import {
 } from '@backstage/core-components';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import {catalogEntityCreatePermission} from "@backstage/plugin-catalog-common/alpha";
+import {usePermission} from "@backstage/plugin-permission-react";
+import {costInsightsReadPermission} from "../../permissions/permissions";
 
 
 const useSidebarLogoStyles = makeStyles({
@@ -59,39 +62,49 @@ const SidebarLogo = () => {
   );
 };
 
-export const Root = ({ children }: PropsWithChildren<{}>) => (
-  <SidebarPage>
-    <Sidebar>
-      <SidebarLogo />
-      <SidebarGroup label="Search" icon={<SearchIcon />} to="/search">
-        <SidebarSearchModal />
-      </SidebarGroup>
-      <SidebarDivider />
-      <SidebarGroup label="Menu" icon={<MenuIcon />}>
-        {/* Global nav, not org-specific */}
-        <SidebarItem icon={HomeIcon} to="catalog" text="Home" />
-        <SidebarItem icon={CenterFocusIcon} to="explore" text="Explore" />
-        <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs" />
-        <SidebarItem icon={LibraryBooks} to="docs" text="Docs" />
-        <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
-        {/* End global nav */}
-        <SidebarDivider />
-        <SidebarScrollWrapper>
-          <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox" />
-          <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar" />
-          <SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights" />
-        </SidebarScrollWrapper>
-      </SidebarGroup>
-      <SidebarSpace />
-      <SidebarDivider />
-      <SidebarGroup
-        label="Settings"
-        icon={<UserSettingsSignInAvatar />}
-        to="/settings"
-      >
-        <SidebarSettings />
-      </SidebarGroup>
-    </Sidebar>
-    {children}
-  </SidebarPage>
-);
+
+
+export const Root = ({ children }: PropsWithChildren<{}>) => {
+  const { allowed: entityCreationAllowed } = usePermission({
+    permission: catalogEntityCreatePermission,
+  });
+  const { allowed: costInsightsAllowed } = usePermission({
+    permission: costInsightsReadPermission
+  })
+  return (<SidebarPage>
+      <Sidebar>
+        <SidebarLogo/>
+        <SidebarGroup label="Search" icon={<SearchIcon/>} to="/search">
+          <SidebarSearchModal/>
+        </SidebarGroup>
+        <SidebarDivider/>
+        <SidebarGroup label="Menu" icon={<MenuIcon/>}>
+          {/* Global nav, not org-specific */}
+          <SidebarItem icon={HomeIcon} to="catalog" text="Home"/>
+          <SidebarItem icon={CenterFocusIcon} to="explore" text="Explore"/>
+          <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs"/>
+          <SidebarItem icon={LibraryBooks} to="docs" text="Docs"/>
+          {entityCreationAllowed && (<SidebarItem icon={CreateComponentIcon} to="create" text="Create..."/>)}
+          <SidebarDivider/>
+          {/* End global nav */}
+
+          <SidebarScrollWrapper>
+            <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox"/>
+            <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar"/>
+            {costInsightsAllowed && (<SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights"/>)}
+          </SidebarScrollWrapper>
+        </SidebarGroup>
+        <SidebarSpace/>
+        <SidebarDivider/>
+        <SidebarGroup
+          label="Settings"
+          icon={<UserSettingsSignInAvatar/>}
+          to="/settings"
+        >
+          <SidebarSettings/>
+        </SidebarGroup>
+      </Sidebar>
+      {children}
+    </SidebarPage>
+  );
+}

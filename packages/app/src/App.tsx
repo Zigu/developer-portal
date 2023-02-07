@@ -2,22 +2,22 @@ import React from 'react';
 import {Navigate, Route} from 'react-router';
 import {apiDocsPlugin, ApiExplorerPage} from '@backstage/plugin-api-docs';
 import {
-    CatalogEntityPage,
-    CatalogIndexPage,
-    catalogPlugin,
+  CatalogEntityPage,
+  CatalogIndexPage,
+  catalogPlugin,
 } from '@backstage/plugin-catalog';
 import {
-    CatalogImportPage,
-    catalogImportPlugin,
+  CatalogImportPage,
+  catalogImportPlugin,
 } from '@backstage/plugin-catalog-import';
 import {ScaffolderPage, scaffolderPlugin} from '@backstage/plugin-scaffolder';
 import {orgPlugin} from '@backstage/plugin-org';
 import {SearchPage} from '@backstage/plugin-search';
 import {TechRadarPage} from '@backstage/plugin-tech-radar';
 import {
-    TechDocsIndexPage,
-    techdocsPlugin,
-    TechDocsReaderPage,
+  TechDocsIndexPage,
+  techdocsPlugin,
+  TechDocsReaderPage,
 } from '@backstage/plugin-techdocs';
 import {TechDocsAddons} from '@backstage/plugin-techdocs-react';
 import {ReportIssue} from '@backstage/plugin-techdocs-module-addons-contrib';
@@ -39,95 +39,103 @@ import {SignInPage} from '@backstage/core-components';
 
 import {ToolboxPage} from '@drodil/backstage-plugin-toolbox';
 import {ExplorePage} from '@backstage/plugin-explore';
-import { CostInsightsPage } from '@backstage/plugin-cost-insights';
+import {CostInsightsPage} from '@backstage/plugin-cost-insights';
+import {costInsightsReadPermission} from "./permissions/permissions";
 
 const app = createApp({
-    apis,
-    components: {
-        SignInPage: props => (
-            <SignInPage
-                {...props}
-                providers={['guest', {
-                    id: 'keycloak-auth-provider',
-                    title: 'KeyCloak',
-                    message: 'Sign in using Keycloak',
-                    apiRef: keycloakAuthApiRef,
-                }]}
-            />
-        )
-    },
-    bindRoutes({bind}) {
-        bind(catalogPlugin.externalRoutes, {
-            createComponent: scaffolderPlugin.routes.root,
-            viewTechDoc: techdocsPlugin.routes.docRoot,
-        });
-        bind(apiDocsPlugin.externalRoutes, {
-            registerApi: catalogImportPlugin.routes.importPage,
-        });
-        bind(scaffolderPlugin.externalRoutes, {
-            registerComponent: catalogImportPlugin.routes.importPage,
-        });
-        bind(orgPlugin.externalRoutes, {
-            catalogIndex: catalogPlugin.routes.catalogIndex,
-        });
-    },
+  apis,
+  components: {
+    SignInPage: props => (
+      <SignInPage
+        {...props}
+        providers={['guest', {
+          id: 'keycloak-auth-provider',
+          title: 'KeyCloak',
+          message: 'Sign in using Keycloak',
+          apiRef: keycloakAuthApiRef,
+        }]}
+      />
+    )
+  },
+  bindRoutes({bind}) {
+    bind(catalogPlugin.externalRoutes, {
+      createComponent: scaffolderPlugin.routes.root,
+      viewTechDoc: techdocsPlugin.routes.docRoot,
+    });
+    bind(apiDocsPlugin.externalRoutes, {
+      registerApi: catalogImportPlugin.routes.importPage,
+    });
+    bind(scaffolderPlugin.externalRoutes, {
+      registerComponent: catalogImportPlugin.routes.importPage,
+    });
+    bind(orgPlugin.externalRoutes, {
+      catalogIndex: catalogPlugin.routes.catalogIndex,
+    });
+  },
 });
 
 const AppProvider = app.getProvider();
 const AppRouter = app.getRouter();
 
 const routes = (
-    <FlatRoutes>
-        <Route path="/" element={<Navigate to="catalog"/>}/>
-        <Route path="/catalog" element={<CatalogIndexPage/>}/>
-        <Route
-            path="/catalog/:namespace/:kind/:name"
-            element={<CatalogEntityPage/>}
-        >
-            {entityPage}
-        </Route>
-        <Route path="/docs" element={<TechDocsIndexPage/>}/>
-        <Route
-            path="/docs/:namespace/:kind/:name/*"
-            element={<TechDocsReaderPage/>}
-        >
-            <TechDocsAddons>
-                <ReportIssue/>
-            </TechDocsAddons>
-        </Route>
-        <Route path="/create" element={<ScaffolderPage/>}/>
-        <Route path="/api-docs" element={<ApiExplorerPage/>}/>
-        <Route
-            path="/tech-radar"
-            element={<TechRadarPage width={1500} height={800}/>}
-        />
-        <Route
-            path="/catalog-import"
-            element={
-                <RequirePermission permission={catalogEntityCreatePermission}>
-                    <CatalogImportPage/>
-                </RequirePermission>
-            }
-        />
-        <Route path="/search" element={<SearchPage/>}>
-            {searchPage}
-        </Route>
-        <Route path="/settings" element={<UserSettingsPage/>}/>
-        <Route path="/catalog-graph" element={<CatalogGraphPage/>}/>
-        <Route path="/toolbox" element={<ToolboxPage/>}/>
-        <Route path="/explore" element={<ExplorePage/>}/>
-        <Route path="/cost-insights" element={<CostInsightsPage />} />
-    </FlatRoutes>
+  <FlatRoutes>
+    <Route path="/" element={<Navigate to="catalog"/>}/>
+    <Route path="/catalog" element={<CatalogIndexPage/>}/>
+    <Route
+      path="/catalog/:namespace/:kind/:name"
+      element={<CatalogEntityPage/>}
+    >
+      {entityPage}
+    </Route>
+    <Route path="/docs" element={<TechDocsIndexPage/>}/>
+    <Route
+      path="/docs/:namespace/:kind/:name/*"
+      element={<TechDocsReaderPage/>}
+    >
+      <TechDocsAddons>
+        <ReportIssue/>
+      </TechDocsAddons>
+    </Route>
+    <Route path="/create" element={
+      <RequirePermission permission={catalogEntityCreatePermission}>
+        <ScaffolderPage/>
+      </RequirePermission>
+    }/>
+    <Route path="/api-docs" element={<ApiExplorerPage/>}/>
+    <Route
+      path="/tech-radar"
+      element={<TechRadarPage width={1500} height={800}/>}
+    />
+    <Route
+      path="/catalog-import"
+      element={
+        <RequirePermission permission={catalogEntityCreatePermission}>
+          <CatalogImportPage/>
+        </RequirePermission>
+      }/>
+    <Route path="/search" element={<SearchPage/>}>
+      {searchPage}
+    </Route>
+    <Route path="/settings" element={<UserSettingsPage/>}/>
+    <Route path="/catalog-graph" element={<CatalogGraphPage/>}/>
+    <Route path="/toolbox" element={<ToolboxPage/>}/>
+    <Route path="/explore" element={<ExplorePage/>}/>
+    <Route path="/cost-insights" element={
+      <RequirePermission permission={costInsightsReadPermission}>
+        <CostInsightsPage/>
+      </RequirePermission>
+    }/>
+  </FlatRoutes>
 );
 
 const App = () => (
-    <AppProvider>
-        <AlertDisplay/>
-        <OAuthRequestDialog/>
-        <AppRouter>
-            <Root>{routes}</Root>
-        </AppRouter>
-    </AppProvider>
+  <AppProvider>
+    <AlertDisplay/>
+    <OAuthRequestDialog/>
+    <AppRouter>
+      <Root>{routes}</Root>
+    </AppRouter>
+  </AppProvider>
 );
 
 export default App;

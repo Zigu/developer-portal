@@ -61,6 +61,9 @@ techdocs:
   publisher:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
+permission:
+  enabled: true
+
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
   providers: {}
