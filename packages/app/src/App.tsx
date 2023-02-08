@@ -41,6 +41,7 @@ import {ToolboxPage} from '@drodil/backstage-plugin-toolbox';
 import {ExplorePage} from '@backstage/plugin-explore';
 import {CostInsightsPage} from '@backstage/plugin-cost-insights';
 import {costInsightsReadPermission} from "./permissions/permissions";
+import { PlaylistIndexPage } from '@backstage/plugin-playlist';
 
 const app = createApp({
   apis,
@@ -125,6 +126,7 @@ const routes = (
         <CostInsightsPage/>
       </RequirePermission>
     }/>
+    <Route path="/playlist" element={<PlaylistIndexPage />} />
   </FlatRoutes>
 );
 

@@ -10,6 +10,7 @@ import CenterFocusIcon from '@material-ui/icons/CenterFocusWeakRounded';
 import MoneyIcon from '@material-ui/icons/MonetizationOn';
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
+import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import {
   Settings as SidebarSettings,
   UserSettingsSignInAvatar,
@@ -89,6 +90,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
           {/* End global nav */}
 
           <SidebarScrollWrapper>
+            <SidebarItem icon={PlaylistPlayIcon} to="playlist" text="Playlists" />
             <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox"/>
             <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar"/>
             {costInsightsAllowed && (<SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights"/>)}

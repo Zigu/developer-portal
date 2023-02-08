@@ -10,5 +10,5 @@ metadata:
      backstage.io/source-location: url:https://github.com/Zigu/developer-portal
 spec:
   type: website
-  owner: porscha@pincservices.de
+  owner: group:developers
   lifecycle: experimental

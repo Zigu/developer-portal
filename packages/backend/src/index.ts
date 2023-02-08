@@ -23,6 +23,7 @@ import techdocs from './plugins/techdocs';
 import search from './plugins/search';
 import explore from './plugins/explore';
 import permission from './plugins/permissions';
+import playlist from './plugins/playlist';
 import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
@@ -83,6 +84,7 @@ async function main() {
   const searchEnv = useHotMemoize(module, () => createEnv('search'));
   const appEnv = useHotMemoize(module, () => createEnv('app'));
   const permissionEnv = useHotMemoize(module, () => createEnv('permission'));
+  const playlistEnv = useHotMemoize(module, () => createEnv('playlist'));
 
   const apiRouter = Router();
   apiRouter.use('/catalog', await catalog(catalogEnv));
@@ -93,6 +95,7 @@ async function main() {
   apiRouter.use('/search', await search(searchEnv));
   apiRouter.use('/explore', await explore(exploreEnv));
   apiRouter.use('/permission', await permission(permissionEnv));
+  apiRouter.use('/playlist', await playlist(playlistEnv));
 
   // Add backends ABOVE this line; this 404 handler is the catch-all fallback
   apiRouter.use(notFoundHandler());

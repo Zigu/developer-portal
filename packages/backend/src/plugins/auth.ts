@@ -10,8 +10,6 @@ import {
   DEFAULT_NAMESPACE,
 } from '@backstage/catalog-model';
 
-
-
 export default async function createPlugin(
   env: PluginEnvironment,
 ): Promise<Router> {
@@ -78,11 +76,9 @@ export default async function createPlugin(
               name: preferredUsername || 'unknown',
               namespace: DEFAULT_NAMESPACE
             });
-            return ctx.issueToken({
-              claims: {
-                sub: userEntity, // The user's own identity
-                ent: [userEntity], // A list of identities that the user claims ownership through
-              },
+
+            return ctx.signInWithCatalogUser({
+              entityRef: userEntity
             });
           },
         },
