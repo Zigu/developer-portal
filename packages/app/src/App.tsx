@@ -42,6 +42,7 @@ import {ExplorePage} from '@backstage/plugin-explore';
 import {CostInsightsPage} from '@backstage/plugin-cost-insights';
 import {costInsightsReadPermission} from "./permissions/permissions";
 import { PlaylistIndexPage } from '@backstage/plugin-playlist';
+import { shortcutsPlugin } from '@backstage/plugin-shortcuts';
 
 const app = createApp({
   apis,
@@ -58,6 +59,7 @@ const app = createApp({
       />
     )
   },
+  plugins: [shortcutsPlugin],
   bindRoutes({bind}) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,

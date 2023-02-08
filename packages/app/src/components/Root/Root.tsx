@@ -33,6 +33,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import {catalogEntityCreatePermission} from "@backstage/plugin-catalog-common/alpha";
 import {usePermission} from "@backstage/plugin-permission-react";
 import {costInsightsReadPermission} from "../../permissions/permissions";
+import { Shortcuts } from '@backstage/plugin-shortcuts';
 
 
 const useSidebarLogoStyles = makeStyles({
@@ -94,6 +95,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
             <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox"/>
             <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar"/>
             {costInsightsAllowed && (<SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights"/>)}
+            <Shortcuts />
           </SidebarScrollWrapper>
         </SidebarGroup>
         <SidebarSpace/>
