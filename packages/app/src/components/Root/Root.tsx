@@ -8,6 +8,7 @@ import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import BuildIcon from '@material-ui/icons/Build';
 import CenterFocusIcon from '@material-ui/icons/CenterFocusWeakRounded';
 import MoneyIcon from '@material-ui/icons/MonetizationOn';
+import LayersIcon from '@material-ui/icons/Layers';
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
@@ -82,8 +83,9 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
         <SidebarDivider/>
         <SidebarGroup label="Menu" icon={<MenuIcon/>}>
           {/* Global nav, not org-specific */}
-          <SidebarItem icon={HomeIcon} to="catalog" text="Home"/>
+          <SidebarItem icon={HomeIcon} to="/" text="Home"/>
           <SidebarItem icon={CenterFocusIcon} to="explore" text="Explore"/>
+          <SidebarItem icon={LayersIcon} to="catalog" text="Catalog"/>
           <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs"/>
           <SidebarItem icon={LibraryBooks} to="docs" text="Docs"/>
           {entityCreationAllowed && (<SidebarItem icon={CreateComponentIcon} to="create" text="Create..."/>)}

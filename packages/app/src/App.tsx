@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navigate, Route} from 'react-router';
+import {Route} from 'react-router';
 import {apiDocsPlugin, ApiExplorerPage} from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -41,8 +41,10 @@ import {ToolboxPage} from '@drodil/backstage-plugin-toolbox';
 import {ExplorePage} from '@backstage/plugin-explore';
 import {CostInsightsPage} from '@backstage/plugin-cost-insights';
 import {costInsightsReadPermission} from "./permissions/permissions";
-import { PlaylistIndexPage } from '@backstage/plugin-playlist';
-import { shortcutsPlugin } from '@backstage/plugin-shortcuts';
+import {PlaylistIndexPage} from '@backstage/plugin-playlist';
+import {shortcutsPlugin} from '@backstage/plugin-shortcuts';
+import {HomepageCompositionRoot} from "@backstage/plugin-home";
+import {HomePage} from "./components/home/HomePage";
 
 const app = createApp({
   apis,
@@ -77,12 +79,14 @@ const app = createApp({
   },
 });
 
-const AppProvider = app.getProvider();
 const AppRouter = app.getRouter();
 
 const routes = (
   <FlatRoutes>
-    <Route path="/" element={<Navigate to="catalog"/>}/>
+    <Route path="/" element={<HomepageCompositionRoot/>}>
+      <HomePage/>
+    </Route>;
+
     <Route path="/catalog" element={<CatalogIndexPage/>}/>
     <Route
       path="/catalog/:namespace/:kind/:name"
@@ -128,18 +132,17 @@ const routes = (
         <CostInsightsPage/>
       </RequirePermission>
     }/>
-    <Route path="/playlist" element={<PlaylistIndexPage />} />
+    <Route path="/playlist" element={<PlaylistIndexPage/>}/>
   </FlatRoutes>
 );
 
-const App = () => (
-  <AppProvider>
+
+export default app.createRoot(
+  <>
     <AlertDisplay/>
     <OAuthRequestDialog/>
     <AppRouter>
       <Root>{routes}</Root>
     </AppRouter>
-  </AppProvider>
+  </>
 );
-
-export default App;
