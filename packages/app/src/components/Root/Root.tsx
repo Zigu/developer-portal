@@ -31,6 +31,7 @@ import {
 } from '@backstage/core-components';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import EcoIcon from '@material-ui/icons/Eco';
 import {catalogEntityCreatePermission} from "@backstage/plugin-catalog-common/alpha";
 import {usePermission} from "@backstage/plugin-permission-react";
 import {costInsightsReadPermission} from "../../permissions/permissions";
@@ -97,6 +98,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
             <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox"/>
             <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar"/>
             {costInsightsAllowed && (<SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights"/>)}
+            <SidebarItem icon={EcoIcon} to="cloud-carbon-footprint" text="Cloud Carbon Footprint" />
             <Shortcuts />
           </SidebarScrollWrapper>
         </SidebarGroup>

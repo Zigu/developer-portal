@@ -45,6 +45,7 @@ import {PlaylistIndexPage} from '@backstage/plugin-playlist';
 import {shortcutsPlugin} from '@backstage/plugin-shortcuts';
 import {HomepageCompositionRoot} from "@backstage/plugin-home";
 import {HomePage} from "./components/home/HomePage";
+import { CloudCarbonFootprintPage } from '@cloud-carbon-footprint/backstage-plugin-frontend'
 
 const app = createApp({
   apis,
@@ -133,6 +134,7 @@ const routes = (
       </RequirePermission>
     }/>
     <Route path="/playlist" element={<PlaylistIndexPage/>}/>
+    <Route path="/cloud-carbon-footprint" element={<CloudCarbonFootprintPage />} />
   </FlatRoutes>
 );
 

@@ -109,6 +109,12 @@ costInsights:
       unit: 'carbon offset ton'
       rate: 3.5
 
+cloudCarbonFootprint:
+  client:
+    dateRangeType: months
+    dateRangeValue: 1
+    groupBy: week
+
 catalog:
   import:
     entityFilename: catalog-info.yaml
