@@ -59,6 +59,8 @@ import {ReportIssue} from '@backstage/plugin-techdocs-module-addons-contrib';
 import {EntityPlaylistDialog} from '@backstage/plugin-playlist';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
+import { EntityTodoContent } from '@backstage/plugin-todo';
+
 const EntityLayoutWrapper = (props: { children?: ReactNode }) => {
   const [playlistDialogOpen, setPlaylistDialogOpen] = useState(false);
 
@@ -194,6 +196,9 @@ const serviceEntityPage = (
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
+    <EntityLayout.Route path="/todo" title="Todo">
+      <EntityTodoContent />
+    </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
 
@@ -220,6 +225,9 @@ const websiteEntityPage = (
 
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/todo" title="Todo">
+      <EntityTodoContent />
     </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
