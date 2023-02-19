@@ -26,6 +26,8 @@ import permission from './plugins/permissions';
 import playlist from './plugins/playlist';
 import ccfp from './plugins/ccfp';
 import todo from './plugins/todo';
+import entityFeedback from './plugins/entityFeedback';
+import linguist from './plugins/linguist';
 import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
@@ -89,6 +91,8 @@ async function main() {
   const playlistEnv = useHotMemoize(module, () => createEnv('playlist'));
   const ccfpEnv = useHotMemoize(module, () => createEnv('cloud-carbon-footprint'),);
   const todoEnv = useHotMemoize(module, () => createEnv('todo'));
+  const entityFeedbackEnv = useHotMemoize(module, () => createEnv('entityFeedback'));
+  const linguistEnv = useHotMemoize(module, () => createEnv('linguist'));
 
   const apiRouter = Router();
   apiRouter.use('/catalog', await catalog(catalogEnv));
@@ -102,6 +106,8 @@ async function main() {
   apiRouter.use('/playlist', await playlist(playlistEnv));
   apiRouter.use('/cloud-carbon-footprint', await ccfp(ccfpEnv));
   apiRouter.use('/todo', await todo(todoEnv));
+  apiRouter.use('/entity-feedback', await entityFeedback(entityFeedbackEnv));
+  apiRouter.use('/linguist', await linguist(linguistEnv));
 
   // Add backends ABOVE this line; this 404 handler is the catch-all fallback
   apiRouter.use(notFoundHandler());

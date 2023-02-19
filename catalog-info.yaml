@@ -8,7 +8,7 @@ metadata:
      github.com/project-slug: Zigu/developer-portal
      backstage.io/techdocs-ref: dir:.
      backstage.io/source-location: url:https://github.com/Zigu/developer-portal
-     backstage.io/linguist: https://github.com/Zigu/developer-portal
+     backstage.io/linguist: url:https://github.com/Zigu/developer-portal
 spec:
   type: website
   owner: group:default/developers

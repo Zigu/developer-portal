@@ -37,7 +37,7 @@ import {
   EntityOwnershipCard,
 } from '@backstage/plugin-org';
 import {EntityTechdocsContent} from '@backstage/plugin-techdocs';
-import {EmptyState} from '@backstage/core-components';
+import {EmptyState, InfoCard} from '@backstage/core-components';
 import {
   Direction,
   EntityCatalogGraphCard,
@@ -59,7 +59,15 @@ import {ReportIssue} from '@backstage/plugin-techdocs-module-addons-contrib';
 import {EntityPlaylistDialog} from '@backstage/plugin-playlist';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
-import { EntityTodoContent } from '@backstage/plugin-todo';
+import {EntityTodoContent} from '@backstage/plugin-todo';
+
+import {
+  EntityFeedbackResponseContent,
+  LikeDislikeButtons,
+  EntityLikeDislikeRatingsCard
+} from '@backstage/plugin-entity-feedback';
+
+import {EntityLinguistCard} from '@backstage/plugin-linguist';
 
 const EntityLayoutWrapper = (props: { children?: ReactNode }) => {
   const [playlistDialogOpen, setPlaylistDialogOpen] = useState(false);
@@ -148,15 +156,23 @@ const overviewContent = (
     <Grid item md={6}>
       <EntityAboutCard variant="gridItem"/>
     </Grid>
+    <Grid item md={6}>
+      <EntityLinguistCard/>
+    </Grid>
+
     <Grid item md={6} xs={12}>
       <EntityCatalogGraphCard variant="gridItem" height={400}/>
     </Grid>
-
-    <Grid item md={4} xs={12}>
+    <Grid item md={6} xs={10}>
       <EntityLinksCard/>
     </Grid>
-    <Grid item md={8} xs={12}>
+    <Grid item md={12} xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem"/>
+    </Grid>
+    <Grid item md={2} xs={2}>
+      <InfoCard title="Rate this entity">
+        <LikeDislikeButtons/>
+      </InfoCard>
     </Grid>
   </Grid>
 );
@@ -197,7 +213,10 @@ const serviceEntityPage = (
       {techdocsContent}
     </EntityLayout.Route>
     <EntityLayout.Route path="/todo" title="Todo">
-      <EntityTodoContent />
+      <EntityTodoContent/>
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/feedback" title="Feedback">
+      <EntityFeedbackResponseContent/>
     </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
@@ -227,7 +246,10 @@ const websiteEntityPage = (
       {techdocsContent}
     </EntityLayout.Route>
     <EntityLayout.Route path="/todo" title="Todo">
-      <EntityTodoContent />
+      <EntityTodoContent/>
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/feedback" title="Feedback">
+      <EntityFeedbackResponseContent/>
     </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
@@ -247,6 +269,9 @@ const defaultEntityPage = (
 
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/feedback" title="Feedback">
+      <EntityFeedbackResponseContent/>
     </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
@@ -297,6 +322,9 @@ const apiPage = (
         </Grid>
       </Grid>
     </EntityLayout.Route>
+    <EntityLayout.Route path="/feedback" title="Feedback">
+      <EntityFeedbackResponseContent/>
+    </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
 
@@ -329,6 +357,9 @@ const groupPage = (
         </Grid>
         <Grid item xs={12}>
           <EntityMembersListCard/>
+        </Grid>
+        <Grid item xs={12}>
+          <EntityLikeDislikeRatingsCard/>
         </Grid>
       </Grid>
     </EntityLayout.Route>
@@ -379,6 +410,9 @@ const systemPage = (
         unidirectional={false}
       />
     </EntityLayout.Route>
+    <EntityLayout.Route path="/feedback" title="Feedback">
+      <EntityFeedbackResponseContent/>
+    </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
 
@@ -397,6 +431,9 @@ const domainPage = (
           <EntityHasSystemsCard variant="gridItem"/>
         </Grid>
       </Grid>
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/feedback" title="Feedback">
+      <EntityFeedbackResponseContent/>
     </EntityLayout.Route>
   </EntityLayoutWrapper>
 );

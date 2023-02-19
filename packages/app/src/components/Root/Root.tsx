@@ -6,6 +6,7 @@ import MapIcon from '@material-ui/icons/MyLocation';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import BuildIcon from '@material-ui/icons/Build';
+import CheckboxIcon from '@material-ui/icons/CheckBoxOutlined';
 import CenterFocusIcon from '@material-ui/icons/CenterFocusWeakRounded';
 import MoneyIcon from '@material-ui/icons/MonetizationOn';
 import LayersIcon from '@material-ui/icons/Layers';
@@ -94,8 +95,9 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
           {/* End global nav */}
 
           <SidebarScrollWrapper>
-            <SidebarItem icon={PlaylistPlayIcon} to="playlist" text="Playlists" />
+            <SidebarItem icon={PlaylistPlayIcon} to="playlist" text="Entity Playlists" />
             <SidebarItem icon={BuildIcon} to="toolbox" text="ToolBox"/>
+            <SidebarItem icon={CheckboxIcon} to="entity-validation" text="Entity Validator" />
             <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar"/>
             {costInsightsAllowed && (<SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights"/>)}
             <SidebarItem icon={EcoIcon} to="cloud-carbon-footprint" text="Cloud Carbon Footprint" />

@@ -46,6 +46,7 @@ import {shortcutsPlugin} from '@backstage/plugin-shortcuts';
 import {HomepageCompositionRoot} from "@backstage/plugin-home";
 import {HomePage} from "./components/home/HomePage";
 import { CloudCarbonFootprintPage } from '@cloud-carbon-footprint/backstage-plugin-frontend'
+import { EntityValidationPage } from '@backstage/plugin-entity-validation';
 
 const app = createApp({
   apis,
@@ -126,6 +127,7 @@ const routes = (
     </Route>
     <Route path="/settings" element={<UserSettingsPage/>}/>
     <Route path="/catalog-graph" element={<CatalogGraphPage/>}/>
+    <Route path="/entity-validation" element={<EntityValidationPage />} />
     <Route path="/toolbox" element={<ToolboxPage/>}/>
     <Route path="/explore" element={<ExplorePage/>}/>
     <Route path="/cost-insights" element={
