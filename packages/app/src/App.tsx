@@ -47,6 +47,7 @@ import {HomepageCompositionRoot} from "@backstage/plugin-home";
 import {HomePage} from "./components/home/HomePage";
 import { CloudCarbonFootprintPage } from '@cloud-carbon-footprint/backstage-plugin-frontend'
 import { EntityValidationPage } from '@backstage/plugin-entity-validation';
+import { ScoreBoardPage } from './components/scorecard/ScoreBoardPage';
 
 const app = createApp({
   apis,
@@ -54,12 +55,13 @@ const app = createApp({
     SignInPage: props => (
       <SignInPage
         {...props}
-        providers={['guest', {
+        auto
+        provider={{
           id: 'keycloak-auth-provider',
           title: 'KeyCloak',
           message: 'Sign in using Keycloak',
           apiRef: keycloakAuthApiRef,
-        }]}
+        }}
       />
     )
   },
@@ -137,6 +139,7 @@ const routes = (
     }/>
     <Route path="/playlist" element={<PlaylistIndexPage/>}/>
     <Route path="/cloud-carbon-footprint" element={<CloudCarbonFootprintPage />} />
+    <Route path="/score-board" element={<ScoreBoardPage />} />
   </FlatRoutes>
 );
 

@@ -69,6 +69,13 @@ import {
 
 import {EntityLinguistCard} from '@backstage/plugin-linguist';
 
+import {
+  isGitlabAvailable,
+  EntityGitlabContent,
+} from '@immobiliarelabs/backstage-plugin-gitlab';
+
+import { EntityScoreCardContent } from '@oriflame/backstage-plugin-score-card';
+
 const EntityLayoutWrapper = (props: { children?: ReactNode }) => {
   const [playlistDialogOpen, setPlaylistDialogOpen] = useState(false);
 
@@ -109,6 +116,9 @@ const cicdContent = (
   <EntitySwitch>
     <EntitySwitch.Case if={isGithubActionsAvailable}>
       <EntityGithubActionsContent/>
+    </EntitySwitch.Case>
+    <EntitySwitch.Case if={isGitlabAvailable}>
+      <EntityGitlabContent/>
     </EntitySwitch.Case>
 
     <EntitySwitch.Case>
@@ -413,6 +423,13 @@ const systemPage = (
     <EntityLayout.Route path="/feedback" title="Feedback">
       <EntityFeedbackResponseContent/>
     </EntityLayout.Route>
+    <EntityLayout.Route path="/score" title="Score">
+            <Grid container spacing={3} alignItems="stretch">
+              <Grid item xs={12}>
+                <EntityScoreCardContent />
+              </Grid>
+            </Grid>
+          </EntityLayout.Route>
   </EntityLayoutWrapper>
 );
 

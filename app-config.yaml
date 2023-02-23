@@ -19,6 +19,7 @@ backend:
     # host: 127.0.0.1
   csp:
     connect-src: ["'self'", 'http:', 'https:']
+    default-src: ["'self'", "raw.githubusercontent.com"]
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
@@ -35,6 +36,9 @@ backend:
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
+  gitlab:
+    - host: gitlab.com
+      token: ${GITLAB_TOKEN}
   github:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
@@ -114,6 +118,9 @@ cloudCarbonFootprint:
     dateRangeType: months
     dateRangeValue: 1
     groupBy: week
+
+scorecards:
+  jsonDataUrl: https://raw.githubusercontent.com/Oriflame/backstage-plugins/main/plugins/score-card/sample-data/
 
 catalog:
   import:

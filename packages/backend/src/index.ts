@@ -28,6 +28,8 @@ import ccfp from './plugins/ccfp';
 import todo from './plugins/todo';
 import entityFeedback from './plugins/entityFeedback';
 import linguist from './plugins/linguist';
+import gitlab from './plugins/gitlab';
+import techInsights from './plugins/techInsights';
 import { PluginEnvironment } from './types';
 import { ServerPermissionClient } from '@backstage/plugin-permission-node';
 import { DefaultIdentityClient } from '@backstage/plugin-auth-node';
@@ -93,6 +95,8 @@ async function main() {
   const todoEnv = useHotMemoize(module, () => createEnv('todo'));
   const entityFeedbackEnv = useHotMemoize(module, () => createEnv('entityFeedback'));
   const linguistEnv = useHotMemoize(module, () => createEnv('linguist'));
+  const techInsightsEnv = useHotMemoize(module, () => createEnv('tech_insights'));
+  const gitlabEnv = useHotMemoize(module, () => createEnv('gitlab'));
 
   const apiRouter = Router();
   apiRouter.use('/catalog', await catalog(catalogEnv));
@@ -108,6 +112,9 @@ async function main() {
   apiRouter.use('/todo', await todo(todoEnv));
   apiRouter.use('/entity-feedback', await entityFeedback(entityFeedbackEnv));
   apiRouter.use('/linguist', await linguist(linguistEnv));
+  apiRouter.use('/tech-insights', await techInsights(techInsightsEnv));
+  apiRouter.use('/gitlab', await gitlab(gitlabEnv));
+
 
   // Add backends ABOVE this line; this 404 handler is the catch-all fallback
   apiRouter.use(notFoundHandler());

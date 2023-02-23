@@ -37,7 +37,7 @@ import {catalogEntityCreatePermission} from "@backstage/plugin-catalog-common/al
 import {usePermission} from "@backstage/plugin-permission-react";
 import {costInsightsReadPermission} from "../../permissions/permissions";
 import { Shortcuts } from '@backstage/plugin-shortcuts';
-
+import Score from '@material-ui/icons/Score';
 
 const useSidebarLogoStyles = makeStyles({
   root: {
@@ -101,6 +101,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => {
             <SidebarItem icon={MapIcon} to="tech-radar" text="Tech Radar"/>
             {costInsightsAllowed && (<SidebarItem icon={MoneyIcon} to="cost-insights" text="Cost Insights"/>)}
             <SidebarItem icon={EcoIcon} to="cloud-carbon-footprint" text="Cloud Carbon Footprint" />
+            <SidebarItem icon={Score} to="score-board" text="Score board" />
             <Shortcuts />
           </SidebarScrollWrapper>
         </SidebarGroup>
